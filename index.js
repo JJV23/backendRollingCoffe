@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import 'dotenv/config'; // permite procesar variables de entorno
 import path from 'path';
 import { fileURLToPath } from 'url';
+import productosRouter from './src/routes/productos.routes.js';
 
 //node --watch index.js comando experimental para desarrollo 
 console.log('Bienvenidos C74i lo mejor de rolling')
@@ -26,8 +27,8 @@ const __dirname = path.dirname(__filename);
 //console.log(path.join(__dirname,'/public'));
 app.use(express.static(path.join(__dirname,'/public')));    
 // 3- configuración de las rutas
-app.get('/nuevo', (req, res)=>{
-    console.log('Hola mundo');
-    res.send('desde el backend de rollingCoffee');
-
-})
+//app.get('/nuevo', (req, res)=>{
+//    console.log('Hola mundo');
+//    res.send('desde el backend de rollingCoffee');
+//})
+app.use('/api', productosRouter)
