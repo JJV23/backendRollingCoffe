@@ -5,6 +5,7 @@ import 'dotenv/config'; // permite procesar variables de entorno
 import path from 'path';
 import { fileURLToPath } from 'url';
 import productosRouter from './src/routes/productos.routes.js';
+import './src/database/database.js'
 
 //node --watch index.js comando experimental para desarrollo 
 console.log('Bienvenidos C74i lo mejor de rolling')
@@ -31,4 +32,5 @@ app.use(express.static(path.join(__dirname,'/public')));
 //    console.log('Hola mundo');
 //    res.send('desde el backend de rollingCoffee');
 //})
+//http://localhost:4001/api/productos
 app.use('/api', productosRouter)
