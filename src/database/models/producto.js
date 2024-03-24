@@ -18,10 +18,34 @@ const productoSchema = new Schema({
         type: String,
         required: true,
         validate:{
-            validator: function(vslor){
-                //validar el valor con un patron 
-                return 
-            }
+            validator: function(valor){
+                //validar el valor con un patron o expresion regular
+                return /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i.test(valor)
+            },
+            message: props => `${props.value} no es una url de imagen valida.`
         }
+    },
+    categoria:{
+        type: String,
+        required: true,
+        enum: ['Infusiones','Batidos','Dulce','Salado']
+    },
+    descripcion_breve:{
+        type: String,
+        required:true,
+        minLength: 10,
+        maxLength: 100,
+    },
+    descripcion_amplia:{
+        type: String,
+        required:true,
+        minLength: 20,
+        maxLength: 1000,
     }
 })
+
+//vamos a generar el modelo Producto
+
+const Producto = mongoose.model('producto', productoSchema)
+
+export default Producto; 
