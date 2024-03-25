@@ -34,16 +34,36 @@ export const crearProductos = async (req, res) => {
     });
   }
 };
-export const obtenerProducto = async(req, res)=> {
-    try{
-        //extraer el parametro id
-        console.log(req.params.id);
-        //buscar el producto en la BD
-        const productoBuscado = await Producto.findById(req.params.id);
-        //responder con el producto
-        res.status(200).json(productoBuscado);
-    }catch(error){
-        console.error(error)
-        res.status(404).json({mensaje:"No se encontro el producto buscado"})
-    }
-}
+export const obtenerProducto = async (req, res) => {
+  try {
+    //extraer el parametro id
+    console.log(req.params.id);
+    //buscar el producto en la BD
+    const productoBuscado = await Producto.findById(req.params.id);
+    //responder con el producto
+    res.status(200).json(productoBuscado);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ mensaje: "No se encontro el producto buscado" });
+  }
+};
+
+export const editarProducto = async (req, res) => {
+  try {
+    //extraer el id del producto a editar y los datos del producto a editar del req.body
+    //buscar si encontramos el producto con el id
+    const productoBuscado = await Producto.findById(req.params.id);
+    //no encontre el producto buscado?
+    if(!productoBuscado){
+        //enviar un mensaje de error en caso de no encontrar el producto
+        return res.status(404).json({mensaje:"El producto no fue encontrado."}); 
+    } 
+    //editar el producto
+    await Producto.findByIdAndUpdate(req.params.id, req.body);
+    //contestamos al front con un status 200 
+    res.status(200).json({mensaje: "El producto fue editado correctamente."})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({mensaje: "Ocurrio un errror al editar un producto"})
+  }
+};
